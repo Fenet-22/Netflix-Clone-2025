@@ -1,0 +1,41 @@
+/* RESET — remove browser default spacing */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* GLOBAL APP STYLE */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #111;
+  color: white;
+  font-family: "Inter", Arial, sans-serif;
+}
+
+/* Netflix-style section titles */
+h2 {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 24px;
+  letter-spacing: 1px;
+  margin-left: 20px;
+}
+
+
+/* For smooth scrolling everywhere */
+html {
+  scroll-behavior: smooth;
+}
+
+/* App container */
+.App {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #111;
+}
+
+/* Image defaults */
+/* img {
+  display: block;
+} */
