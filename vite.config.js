@@ -7,6 +7,7 @@ export default defineConfig({
     react({
       babel: {
         plugins: [['babel-plugin-react-compiler']],
+        base: "/Netflix-Clone-2025/", 
       },
     }),
   ],
