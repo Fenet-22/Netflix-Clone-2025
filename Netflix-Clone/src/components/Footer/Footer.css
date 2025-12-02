@@ -1,0 +1,75 @@
+.footer {
+  width: 100%;
+  background-color: #111;
+  color: #757575;
+  padding: 40px 5%;
+  box-sizing: border-box;
+  font-size: 14px;
+  position: relative;
+  left: 0;
+  right: 0;
+}
+
+/* Top section: Questions + Social Icons */
+.footer-top {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 30px;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Social icons row */
+.footer-social {
+  display: flex;
+  gap: 20px;
+}
+
+.footer-icon {
+  color: #757575;
+  cursor: pointer;
+  transition: color 0.2s;
+  font-size: 30px;
+}
+
+.footer-icon:hover {
+  color: #fff;
+}
+
+/* Footer links */
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 60px;
+  margin-bottom: 30px;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.footer-column {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 200px;
+}
+
+.footer-column a {
+  color: #757575;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-column a:hover {
+  color: #fff;
+}
+
+/* Bottom country text */
+.footer-country {
+  font-size: 13px;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
