@@ -16,28 +16,9 @@ function Row({ title, fetchUrl, isLargeRow }) {
       setMovies(request.data.results);
       return request;
     }
+
     fetchData();
   }, [fetchUrl]);
-
-  // SIMPLE + WORKING TRAILER FUNCTION
-  const handleClick = (movie) => {
-    if (trailerUrl) {
-      setTrailerUrl(""); // close trailer if already open
-    } else {
-      const movieName =
-        movie?.title ||
-        movie?.name ||
-        movie?.original_name ||
-        movie?.original_title;
-
-      movieTrailer(movieName)
-        .then((url) => {
-          const params = new URLSearchParams(new URL(url).search);
-          setTrailerUrl(params.get("v"));
-        })
-        .catch((error) => console.log("Trailer not found:", movieName));
-    }
-  };
 
   const opts = {
     height: "390",
@@ -45,6 +26,19 @@ function Row({ title, fetchUrl, isLargeRow }) {
     playerVars: {
       autoplay: 1,
     },
+  };
+
+  const handleClick = (movie) => {
+    if (trailerUrl) {
+      setTrailerUrl(""); // closes trailer
+    } else {
+      movieTrailer(movie?.name || movie?.title || movie?.original_name || "")
+        .then((url) => {
+          const urlParams = new URLSearchParams(new URL(url).search);
+          setTrailerUrl(urlParams.get("v"));
+        })
+        .catch((error) => console.log(error));
+    }
   };
 
   return (
@@ -65,7 +59,6 @@ function Row({ title, fetchUrl, isLargeRow }) {
         ))}
       </div>
 
-      {/* Trailer appears BELOW the row */}
       {trailerUrl && <YouTube videoId={trailerUrl} opts={opts} />}
     </div>
   );
