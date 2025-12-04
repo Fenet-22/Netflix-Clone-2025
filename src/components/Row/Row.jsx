@@ -97,8 +97,8 @@ function Row({ title, fetchUrl, isLargeRow }) {
 
           <div className="hover-controls">
             <button className="hover-btn play" onClick={() => playTrailer(hoveredMovie)}>▶</button>
-            {/* <button className="hover-btn"></button>
-            <button className="hover-btn"></button> */}
+            <button className="hover-btn"></button>
+            <button className="hover-btn"></button>
             <button className="hover-btn">⤢</button>
           </div>
 
