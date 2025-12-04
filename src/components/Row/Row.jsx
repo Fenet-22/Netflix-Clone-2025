@@ -1,99 +1,72 @@
-import React, { useEffect, useState, useRef } from "react";
-import "./Row.css";
+import React, { useState, useEffect } from "react";
 import axios from "../utils/axios";
-
 import YouTube from "react-youtube";
 import movieTrailer from "movie-trailer";
-
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import "./Row.css";
 
 function Row({ title, fetchUrl, isLargeRow }) {
   const [movies, setMovies] = useState([]);
   const [trailerUrl, setTrailerUrl] = useState("");
-  const [modalVisible, setModalVisible] = useState(false);
 
   const base_url = "https://image.tmdb.org/t/p/original/";
-  const rowRef = useRef(null);
 
   useEffect(() => {
     async function fetchData() {
       const request = await axios.get(fetchUrl);
       setMovies(request.data.results);
+      return request;
     }
     fetchData();
   }, [fetchUrl]);
 
+  // SIMPLE + WORKING TRAILER FUNCTION
   const handleClick = (movie) => {
     if (trailerUrl) {
-      setTrailerUrl("");
-      setModalVisible(false);
-      return;
+      setTrailerUrl(""); // close trailer if already open
+    } else {
+      const movieName =
+        movie?.title ||
+        movie?.name ||
+        movie?.original_name ||
+        movie?.original_title;
+
+      movieTrailer(movieName)
+        .then((url) => {
+          const params = new URLSearchParams(new URL(url).search);
+          setTrailerUrl(params.get("v"));
+        })
+        .catch((error) => console.log("Trailer not found:", movieName));
     }
-
-    movieTrailer(movie?.name || movie?.title || movie?.original_name || "")
-      .then((url) => {
-        if (!url) return;
-
-        const urlParams = new URLSearchParams(new URL(url).search);
-        setTrailerUrl(urlParams.get("v"));
-        setModalVisible(true);
-      })
-      .catch(() => console.log("Trailer not found"));
-  };
-
-  const scrollLeft = () => {
-    rowRef.current.scrollBy({
-      left: -window.innerWidth / 2,
-      behavior: "smooth",
-    });
-  };
-
-  const scrollRight = () => {
-    rowRef.current.scrollBy({
-      left: window.innerWidth / 2,
-      behavior: "smooth",
-    });
   };
 
   const opts = {
-    height: "400",
+    height: "390",
     width: "100%",
-    playerVars: { autoplay: 1 },
+    playerVars: {
+      autoplay: 1,
+    },
   };
 
   return (
     <div className="row">
-      <h2 className="row-title">{title}</h2>
+      <h2>{title}</h2>
 
-      <div className="row-wrapper">
-        <ArrowBackIosIcon className="row-arrow left" onClick={scrollLeft} />
-
-        <div className="row-posters" ref={rowRef}>
-          {movies.map((movie) => (
-            <img
-              key={movie.id}
-              onClick={() => handleClick(movie)}
-              className={`row-poster ${isLargeRow && "row-posterLarge"}`}
-              src={`${base_url}${
-                isLargeRow ? movie.poster_path : movie.backdrop_path
-              }`}
-              alt={movie.name || movie.title}
-            />
-          ))}
-        </div>
-
-        <ArrowForwardIosIcon className="row-arrow right" onClick={scrollRight} />
+      <div className="row-posters">
+        {movies.map((movie) => (
+          <img
+            key={movie.id}
+            onClick={() => handleClick(movie)}
+            className={`row-poster ${isLargeRow && "row-posterLarge"}`}
+            src={`${base_url}${
+              isLargeRow ? movie.poster_path : movie.backdrop_path
+            }`}
+            alt={movie.name}
+          />
+        ))}
       </div>
 
-      {modalVisible && (
-        <div className="modal" onClick={() => setModalVisible(false)}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <YouTube videoId={trailerUrl} opts={opts} />
-            <button className="modal-close">✖</button>
-          </div>
-        </div>
-      )}
+      {/* Trailer appears BELOW the row */}
+      {trailerUrl && <YouTube videoId={trailerUrl} opts={opts} />}
     </div>
   );
 }
