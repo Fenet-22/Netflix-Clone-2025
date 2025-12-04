@@ -11,7 +11,6 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 function Row({ title, fetchUrl, isLargeRow }) {
   const [movies, setMovies] = useState([]);
   const [hoveredMovie, setHoveredMovie] = useState(null);
-  const [hoverPos, setHoverPos] = useState({ x: 0, y: 0 });
   const [trailerUrl, setTrailerUrl] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -38,16 +37,6 @@ function Row({ title, fetchUrl, isLargeRow }) {
       .catch(() => console.log("Trailer not found"));
   };
 
-  // FIND HOVER POSITION ON SCREEN
-  const handleHover = (event, movie) => {
-    const rect = event.target.getBoundingClientRect();
-    setHoverPos({
-      x: rect.left + rect.width / 2 - 160, // center hover card
-      y: rect.top - 190, // place above poster
-    });
-    setHoveredMovie(movie);
-  };
-
   // SCROLL CONTROLS
   const scrollLeft = () => {
     rowRef.current.scrollBy({ left: -window.innerWidth / 2, behavior: "smooth" });
@@ -57,6 +46,7 @@ function Row({ title, fetchUrl, isLargeRow }) {
     rowRef.current.scrollBy({ left: window.innerWidth / 2, behavior: "smooth" });
   };
 
+  // YOUTUBE SETTINGS
   const opts = {
     height: "400",
     width: "100%",
@@ -72,23 +62,29 @@ function Row({ title, fetchUrl, isLargeRow }) {
 
         <div className="row-posters" ref={rowRef}>
           {movies.map((movie) => (
-            <img
+            <div
               key={movie.id}
-              className={`row-poster ${isLargeRow && "row-posterLarge"}`}
-              src={`${base_url}${isLargeRow ? movie.poster_path : movie.backdrop_path}`}
-              alt={movie.name || movie.title}
-              onMouseEnter={(e) => handleHover(e, movie)}
+              className="movie-container"
+              onMouseEnter={() => setHoveredMovie(movie)}
               onMouseLeave={() => setHoveredMovie(null)}
-            />
+            >
+              <img
+                className={`row-poster ${isLargeRow && "row-posterLarge"}`}
+                src={`${base_url}${
+                  isLargeRow ? movie.poster_path : movie.backdrop_path
+                }`}
+                alt={movie.name || movie.title}
+              />
+            </div>
           ))}
         </div>
 
         <ArrowForwardIosIcon className="row-arrow right" onClick={scrollRight} />
       </div>
 
-      {/* HOVER CARD */}
+      {/* HOVER PREVIEW CARD LIKE NETFLIX */}
       {hoveredMovie && (
-        <div className="hover-card" style={{ top: hoverPos.y, left: hoverPos.x }}>
+        <div className="hover-card">
           <img
             className="hover-image"
             src={`${base_url}${hoveredMovie.backdrop_path}`}
@@ -97,8 +93,8 @@ function Row({ title, fetchUrl, isLargeRow }) {
 
           <div className="hover-controls">
             <button className="hover-btn play" onClick={() => playTrailer(hoveredMovie)}>▶</button>
-            <button className="hover-btn"></button>
-            <button className="hover-btn"></button>
+            <button className="hover-btn">👍</button>
+            <button className="hover-btn">➕</button>
             <button className="hover-btn">⤢</button>
           </div>
 
