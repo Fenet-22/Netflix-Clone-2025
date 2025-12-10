@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "./Banner.css";
+import { FaPlay } from "react-icons/fa";
 import axios from "../utils/axios"; // make sure you have axios instance
 import requests from "../utils/requests"; // file containing API endpoints
+
 
 function Banner() {
   const [movie, setMovie] = useState({});
@@ -36,7 +38,7 @@ function Banner() {
           {movie?.title || movie?.name || movie?.original_name}
         </h1>
         <div className="banner-buttons">
-          <button className="banner-button">Play</button>
+          <button className="banner-button"><FaPlay />Play</button>
           <button className="banner-button">My List</button>
         </div>
         <h1 className="banner-description">

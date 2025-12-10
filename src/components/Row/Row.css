@@ -1,10 +1,7 @@
 .row {
-  color: #fff;
+  color: white;
   margin-left: 20px;
-}
-
-.row h2 {
-  margin-left: 20px;
+  margin-top: 30px;
 }
 
 .row-posters {
@@ -20,10 +17,10 @@
 
 .row-poster {
   width: 100%;
-  object-fit: contain;
   max-height: 120px;
+  object-fit: contain;
   margin-right: 10px;
-  transition: transform 0.3s;
+  transition: transform 450ms;
   cursor: pointer;
 }
 
@@ -33,4 +30,37 @@
 
 .row-posterLarge {
   max-height: 250px;
+}
+
+/* MODAL */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-content {
+  position: relative;
+  width: 70%;
+  max-width: 900px;
+}
+
+.modal-close {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: white;
+  border: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
 }
