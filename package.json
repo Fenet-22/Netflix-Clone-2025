@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://Fenet-22.github.io/Netflix-Clone-2025",
+  
   "scripts": {
     "dev": "vite",
     "build": "vite build",
