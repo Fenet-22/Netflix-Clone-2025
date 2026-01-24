@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 
 import Header from "./components/Header/Header";
-import Banner from "./components/banner/Banner";
+import Banner from "./components/Banner/Banner";
 import Row from "./components/Row/Row";
 import requests from "./components/utils/requests";
 import axios from "./components/utils/axios";
